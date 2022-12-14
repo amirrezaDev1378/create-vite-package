@@ -1,17 +1,6 @@
-import ejs from 'ejs'
-import * as fs from "fs";
-import path from "path";
+import {readFile, render} from "./helpers";
 
-const readFile = (address: string) => {
-    return fs.readFileSync(path.join(__dirname, address), "utf-8").toString()
-}
-const render = (template, data) => {
-    return `${ejs.render(template, data, {
-        rmWhitespace: true,
-    }).toString()}`
-}
-const packageTemplate = (packageName: string) => {
-    console.log(__dirname , __filename , path.join(__dirname, "./package/packageJson.ejs") , process.cwd() , path.join(process.cwd(), "packageJson.ejs"))
+const packageTemplate = (packageName: string, type: "react" | "pure") => {
     const data = {name: packageName}
 
     return [
@@ -33,11 +22,11 @@ const packageTemplate = (packageName: string) => {
 
         },
         {
-            file: "src/main.jsx",
+            file: "src/main.tsx",
             content: render(readFile("./package/main.ejs"), data)
         },
         {
-            file: "src/App.jsx",
+            file: "src/App.tsx",
             content: render(readFile("./package/app.ejs"), data)
         }, {
             file: "tsconfig.json",

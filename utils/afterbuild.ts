@@ -4,6 +4,7 @@ import path from "path";
 
 const nonTsIncludes = [
     "templates/package",
+    "templates/project",
 ];
 
 (async () => {
@@ -12,7 +13,7 @@ const nonTsIncludes = [
 
     try {
         nonTsIncludes.forEach((dir) => {
-            const folderPath = path.resolve(__dirname, `../${dir}`)
+            const folderPath = path.resolve(__dirname, `../../${dir}`)
             fs.mkdirSync(folderPath)
             fs.cpSync(folderPath, "./dist", {recursive: true});
         })
