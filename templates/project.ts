@@ -33,7 +33,7 @@ const packageTemplate = (packageName: string, type: "react" | "pure") => {
             content: render(readFile("./project/tsconfig.ejs"), data)
         }, {
             file: "tsconfig.node.json",
-            content: render(readFile("./project/tsconfig.ejs"), data)
+            content: render(readFile("./project/tsConfigNode.ejs"), data)
         }
     ]
 }

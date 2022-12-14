@@ -2,15 +2,21 @@ import * as fs from "fs";
 import {execSync} from "child_process";
 import path from "path";
 
-type types = (options: { packageName: string, packagePath: string, type: "react" | "pure" }, commands: string[], template: (name: string, type: "react" | "pure") => { file: string, content: string }[], lastCommands: string[]) => void;
+type options = {
+    packageName: string, targetPath: string, type: "react" | "pure"
+}
+type templateFunction = (name: string, type: "react" | "pure") => { file: string, content: string }[]
+type types = (options: options, commands: string[], template: templateFunction, lastCommands: string[]) => void;
 
-const CreateProject: types = async ({packageName, packagePath , type}, commands, template, lastCommands) => {
+const CreateProject: types = async (options, commands, template, lastCommands) => {
+    const {packageName, targetPath, type} = options;
+    const files = template(packageName, type);
+
     commands.forEach((command) => {
         execSync(command, {stdio: "inherit"});
     })
-    const files = template(packageName , type);
     files.forEach(({file, content}) => {
-        const filePath = path.join(packagePath, file);
+        const filePath = path.join(targetPath, file);
         fs.writeFileSync(filePath, content);
     })
     lastCommands.forEach((command) => {
