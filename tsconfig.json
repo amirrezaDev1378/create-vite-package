@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "baseUrl": ".",
+    "outDir": "dist",
+    "jsx": "react",
+    "moduleResolution": "Node",
+  },
+  "include": [
+    "templates",
+    "utils",
+    "index.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+
+}
