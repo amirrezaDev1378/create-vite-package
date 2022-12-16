@@ -1,8 +1,7 @@
 import {readFile, render} from "./helpers";
 
 const packageTemplate = (packageName: string, type: "react" | "pure") => {
-    const data = {name: packageName}
-
+    const data = {name: packageName};
     return [
         {
             file: "package.json",

@@ -24,7 +24,7 @@ const promptForOptions = async () => {
     }, {
         type: "select",
         name: "withProject",
-        message: "Create a project to use your package with?",
+        message: "Do want to create a simple react project for your package too?",
         choices: [
             {title: "Yes!", value: true},
             {title: "No.", value: false},
