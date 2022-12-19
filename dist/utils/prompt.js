@@ -17,13 +17,7 @@ const promptForOptions = () => __awaiter(void 0, void 0, void 0, function* () {
     const { type, name, withProject } = yield (0, prompts_1.default)([{
             type: "text",
             name: "name",
-            message: "What is the name of your package?",
-            validate: (value) => {
-                if (value.length < 3) {
-                    return "Package name must be at least 3 characters long";
-                }
-                return true;
-            }
+            message: "What is the name of your package?"
         }, {
             type: "select",
             name: "type",

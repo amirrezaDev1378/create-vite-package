@@ -22,11 +22,12 @@ const path_1 = __importDefault(require("path"));
 const child_process_1 = require("child_process");
 const linkProjects_1 = __importDefault(require("./utils/linkProjects"));
 const sanitizeName_1 = __importDefault(require("./utils/sanitizeName"));
+const ErrorBoundary_1 = __importDefault(require("./utils/ErrorBoundary"));
 console_1.default.info("creating a vite package!");
 (() => __awaiter(void 0, void 0, void 0, function* () {
     let hasError = false;
     const { type, name, withProject } = yield (0, prompt_1.default)();
-    const isValidName = (0, sanitizeName_1.default)(name);
+    const isValidName = yield (0, sanitizeName_1.default)(name);
     if (!isValidName) {
         console_1.default.error("invalid package name!");
         console_1.default.error(`
@@ -37,7 +38,7 @@ console_1.default.info("creating a vite package!");
     const packagePath = path_1.default.join(process.cwd(), name);
     const projectPath = path_1.default.join(process.cwd(), `${name}-example`);
     try {
-        const Stage1 = ErrorBoundary(() => {
+        const Stage1 = (0, ErrorBoundary_1.default)(() => {
             console_1.default.info("creating package");
             (0, createProject_1.default)({
                 packageName: name,
@@ -47,13 +48,13 @@ console_1.default.info("creating a vite package!");
             console_1.default.success("package created successfully!");
         });
         if (withProject) {
-            const Stage2 = ErrorBoundary(() => {
+            const Stage2 = (0, ErrorBoundary_1.default)(() => {
                 console_1.default.info("creating example project project");
                 (0, createProject_1.default)({
                     packageName: name,
                     targetPath: projectPath,
                     type
-                }, [`mkdir "${name}-example"`, `mkdir "${name}-example/src/lib"`], project_1.default, [`cd ${name}-example && yarn add react react-dom vite @vitejs/plugin-react typescript @types/react-dom @types/react`]);
+                }, [`mkdir "${name}-example"`, `mkdir "${name}-example/src/lib"`], project_1.default, [`cd ${name}-example && yarn add react react-dom vite @vitejs/plugin-react typescript @types/react-dom @types/react `]);
                 console_1.default.success("project created successfully!");
             });
             hasError = !Stage1 || !Stage2;
@@ -70,7 +71,7 @@ console_1.default.info("creating a vite package!");
         return;
     }
     try {
-        const Stage3 = ErrorBoundary(() => {
+        const Stage3 = (0, ErrorBoundary_1.default)(() => {
             console_1.default.info("building packages");
             (0, child_process_1.execSync)(`cd ${name} && yarn build`, { stdio: "inherit" });
             console_1.default.success("packages built successfully!");
@@ -85,7 +86,7 @@ console_1.default.info("creating a vite package!");
     }
     try {
         if (withProject) {
-            const Stage4 = ErrorBoundary(() => {
+            const Stage4 = (0, ErrorBoundary_1.default)(() => {
                 console_1.default.info("linking packages");
                 (0, linkProjects_1.default)(name);
                 console_1.default.success("packages linked successfully!");

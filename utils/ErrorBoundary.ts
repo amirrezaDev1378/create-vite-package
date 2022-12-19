@@ -12,3 +12,4 @@ const ErrorBoundary: Types = (fn, onError) => {
         return false;
     }
 }
+export default ErrorBoundary;

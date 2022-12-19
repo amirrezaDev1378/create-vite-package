@@ -9,13 +9,14 @@ import path from "path";
 import {execSync} from "child_process";
 import linkProjects from "./utils/linkProjects";
 import sanitizeName from "./utils/sanitizeName";
+import ErrorBoundary from "./utils/ErrorBoundary";
 
 ColorConsole.info("creating a vite package!");
 
 (async () => {
     let hasError = false;
     const {type, name, withProject} = await promptForOptions()
-    const isValidName = sanitizeName(name);
+    const isValidName = await sanitizeName(name);
     if (!isValidName) {
         ColorConsole.error("invalid package name!");
         ColorConsole.error(`
@@ -23,7 +24,6 @@ ColorConsole.info("creating a vite package!");
         `);
         return;
     }
-
     const packagePath = path.join(process.cwd(), name);
     const projectPath = path.join(process.cwd(), `${name}-example`);
     try {
@@ -48,7 +48,7 @@ ColorConsole.info("creating a vite package!");
                         type
                     }, [`mkdir "${name}-example"`, `mkdir "${name}-example/src/lib"`],
                     projectTemplate,
-                    [`cd ${name}-example && yarn add react react-dom vite @vitejs/plugin-react typescript @types/react-dom @types/react`]
+                    [`cd ${name}-example && yarn add react react-dom vite @vitejs/plugin-react typescript @types/react-dom @types/react `]
                 )
                 ColorConsole.success("project created successfully!")
             })
